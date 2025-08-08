@@ -1,0 +1,21 @@
+Competitor: Floodways
+42/68 (61.8%) - successful hits off prayer over total hits for this player (<off_prayer_hits>/<total_hits>)
+492 (+108) - total 'deserved' damage for this player
+603 (+137) - total damage dealt for this player
+13/21 (137.4%) - successful magic attacks for this player (<magic_attacks>/<total_magic_attacks>)
+65/68 (95.6%) - total number of correct offensive prayers for this player (<total_off_prayers>/<total_prayers>)
+398 - total HP recovered during the fight
+3/28 (10.7%) -  total number of times hit while wearing robe top and bottom
+6 (68.3%) - KO attempts vs the opponent
+0 G.B. (0) - 'ghost barrages'
+
+Opponent: Chat Gpt 5
+35/55 (63.6%) - successful hits off prayer over total hits for this player (<off_prayer_hits>/<total_hits>)
+384 (-108) - total 'deserved' damage for this player
+466 (-137)- total damage dealt for this player
+11/27 (88.8%) - successful magic attacks for this player (<magic_attacks>/<total_magic_attacks>)
+N/A - total number of correct offensive prayers for this player (<total_off_prayers>/<total_prayers>) - will not be known to the competitor
+N/A - total HP recovered during the fight - will not be known to the competitor
+8/47 (17%) - total number of times hit while wearing robe top and bottom
+2 (2.8%) - KO attempts vs the opponent
+N/A  - 'ghost barrages' - will not be known to the competitor

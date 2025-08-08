@@ -1,0 +1,218 @@
+.fight-history {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f1f3f4;
+}
+
+.history-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+}
+
+.empty-history p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-item {
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.history-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.history-item.selected {
+  border-color: #667eea;
+  background-color: #e8f2ff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 0.25rem;
+  border-radius: 4px;
+  color: #dc3545;
+}
+
+.history-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.fight-names {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.competitor-name {
+  color: #28a745;
+}
+
+.vs {
+  color: #6c757d;
+  font-weight: 400;
+}
+
+.opponent-name {
+  color: #dc3545;
+}
+
+.fight-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.fight-time {
+  font-weight: 500;
+}
+
+.winner-indicator {
+  background-color: #28a745;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.fight-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.damage-dealt {
+  color: #dc3545;
+}
+
+.attack-count {
+  color: #6c757d;
+}
+
+/* Scrollbar styling */
+.fight-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fight-history::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.fight-history::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.fight-history::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .fight-history {
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .fight-history {
+    padding: 1rem;
+  }
+  
+  .history-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .fight-names {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+  
+  .fight-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .fight-stats {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .fight-history {
+    padding: 0.75rem;
+  }
+  
+  .history-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .history-item {
+    padding: 0.75rem;
+  }
+}
