@@ -6,7 +6,6 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
     const saved = localStorage.getItem('pvpFightDataInput')
     return saved || ''
   })
-  const [isExpanded, setIsExpanded] = useState(false)
   const [showPasted, setShowPasted] = useState(false)
   const hasAutoAnalyzed = useRef(false)
 
@@ -68,12 +67,6 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
     hasAutoAnalyzed.current = false
   }
 
-  const handleManualSubmit = () => {
-    if (inputValue.trim() && !isLoading) {
-      onSubmit(inputValue.trim())
-    }
-  }
-
   return (
     <div className="fight-data-input">
       <div className="input-header">
@@ -103,7 +96,6 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
           placeholder=""
           className={`fight-data-textarea ${showPasted ? 'pasted' : ''}`}
           disabled={isLoading}
-          rows={isExpanded ? 8 : 2}
         />
         <div className="textarea-overlay">
           <div className="paste-instructions">
