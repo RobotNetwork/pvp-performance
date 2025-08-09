@@ -1,11 +1,6 @@
 import './FightHistory.css'
 
 const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, onDeleteFight, getWinner }) => {
-  const formatTime = (timestamp) => {
-    const date = new Date(timestamp)
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  }
-
   if (fights.length === 0) {
     return (
       <div className="fight-history">
@@ -13,7 +8,7 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
           <h3>Fight History</h3>
         </div>
         <div className="empty-history">
-          <p>No fights saved yet. Paste your first fight data to get started!</p>
+          <p>No fight data saved.</p>
         </div>
       </div>
     )
@@ -23,7 +18,7 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
     <div className="fight-history">
       <div className="history-header">
         <h3>Fight History ({fights.length})</h3>
-        <button 
+        <button
           onClick={onClearHistory}
           className="btn btn-danger btn-small"
           title="Clear all fight history"
@@ -31,19 +26,19 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
           Clear All
         </button>
       </div>
-      
+
       <div className="history-list">
         {fights.map((fight) => {
           const winner = getWinner(fight.data)
           const isSelected = selectedFight && selectedFight.id === fight.id
-          
+
           return (
-            <div 
+            <div
               key={fight.id}
               className={`history-item ${isSelected ? 'selected' : ''}`}
               onClick={() => onFightSelect(fight)}
             >
-              <button 
+              <button
                 className="delete-btn"
                 onClick={(e) => {
                   e.stopPropagation()
@@ -53,28 +48,30 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
               >
                 🗑️
               </button>
-              
+
               <div className="fight-names">
-                <span className="competitor-name">{fight.competitorName}</span>
+                <span className="competitor-name">
+                  {winner === fight.competitorName
+                    ? (<span className="winner-indicator">{fight.competitorName}</span>)
+                    : (fight.competitorName)
+                  }
+                </span>
+
                 <span className="vs">vs</span>
-                <span className="opponent-name">{fight.opponentName}</span>
+
+                <span className="opponent-name">
+                  {winner === fight.opponentName
+                    ? (<span className="winner-indicator">{fight.opponentName}</span>)
+                    : (fight.opponentName)
+                  }
+                </span>
               </div>
-              
-              <div className="fight-meta">
-                <span className="fight-time">{formatTime(fight.timestamp)}</span>
-                {winner && (
-                  <span className="winner-indicator">
-                    🏆 {winner}
-                  </span>
-                )}
-              </div>
-              
               <div className="fight-stats">
                 <span className="damage-dealt">
-                  {fight.data.competitor.damageDealt} - {fight.data.opponent.damageDealt}
+                  <strong>dmg</strong>: {fight.data.competitor.damageDealt} <strong>vs</strong> {fight.data.opponent.damageDealt}
                 </span>
                 <span className="attack-count">
-                  {fight.data.competitor.attackCount} - {fight.data.opponent.attackCount}
+                  <strong>hits</strong>: {fight.data.competitor.attackCount} <strong>vs</strong> {fight.data.opponent.attackCount}
                 </span>
               </div>
             </div>

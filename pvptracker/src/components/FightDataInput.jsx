@@ -1,9 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './FightDataInput.css'
 
 const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(() => {
+    const saved = localStorage.getItem('pvpFightDataInput')
+    return saved || ''
+  })
   const [isExpanded, setIsExpanded] = useState(false)
+
+  // Save input value to localStorage whenever it changes
+  useEffect(() => {
+    if (inputValue) {
+      localStorage.setItem('pvpFightDataInput', inputValue)
+    } else {
+      localStorage.removeItem('pvpFightDataInput')
+    }
+  }, [inputValue])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -14,6 +26,7 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
 
   const handleClear = () => {
     setInputValue('')
+    localStorage.removeItem('pvpFightDataInput')
     onClear()
   }
 
@@ -33,7 +46,9 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
         <div className="textarea-container">
           <textarea
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value)
+            }}
             placeholder="Paste your fight data JSON here..."
             className={`fight-data-textarea`}
             disabled={isLoading}
