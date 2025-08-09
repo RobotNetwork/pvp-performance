@@ -41,6 +41,18 @@ const FightMetricsDisplay = ({ fightData, parser, winner }) => {
 		return diff !== 0 ? (diff > 0 ? `+${parser.numberFormat.format(diff)}` : `${parser.numberFormat.format(diff)}`) : null
 	}
 
+	const getKoChancesDifference = () => {
+		const compKoChances = competitorMetrics.koChances.count
+		const oppKoChances = opponentMetrics.koChances.count
+		let diff = 0
+		if (compKoChances > oppKoChances) {
+			diff = compKoChances - oppKoChances
+		} else {
+			diff = oppKoChances - compKoChances
+		}
+		return diff !== 0 ? (diff > 0 ? `+${diff}` : `${diff}`) : null
+	}
+
 	const parsePercentage = (percentage) => {
 		// Extract the percentage number from strings like "28/55 (50.9%)" or "3/28 (10.7%)"
 		const match = percentage.match(/\(([\d.]+)%\)/)
@@ -125,6 +137,15 @@ const FightMetricsDisplay = ({ fightData, parser, winner }) => {
 							<span className="metric-label">Ghost barrages:</span>
 							<span className="metric-value">{competitorMetrics.ghostBarrageStats}</span>
 						</div>
+						<div className="metric-row">
+							<span className="metric-label">KO Chances:</span>
+							<span className="metric-value">
+								{competitorMetrics.koChances.count} ({competitorMetrics.koChances.overallProbability > 0 ? (competitorMetrics.koChances.overallProbability * 100).toFixed(1) : '0.0'}%)
+								{getKoChancesDifference() && competitorMetrics.koChances.count > opponentMetrics.koChances.count && (
+									<span className="difference positive">{getKoChancesDifference()}</span>
+								)}
+							</span>
+						</div>
 					</div>
 				</div>
 
@@ -193,6 +214,16 @@ const FightMetricsDisplay = ({ fightData, parser, winner }) => {
 						<div className="metric-row">
 							<span className="metric-label">Ghost barrages:</span>
 							<span className="metric-value">{opponentMetrics.ghostBarrageStats}</span>
+						</div>
+						<div className="metric-row">
+							<span className="metric-label">KO Chances:</span>
+							<span className="metric-value">
+								{opponentMetrics.koChances.count} ({opponentMetrics.koChances.overallProbability > 0 ? (opponentMetrics.koChances.overallProbability * 100).toFixed(1) : '0.0'}%)
+								{getKoChancesDifference() && opponentMetrics.koChances.count > competitorMetrics.koChances.count && (
+									<span className="difference positive">{getKoChancesDifference()}</span>
+								)}
+
+							</span>
 						</div>
 					</div>
 				</div>

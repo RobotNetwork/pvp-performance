@@ -127,6 +127,9 @@ export class FightDataParser {
       ? (fighter.robeHits / fighter.attackCount * 100).toFixed(1)
       : '0.0';
 
+    // Calculate KO chances metrics
+    const koChances = this.calculateKoChances(fighter.fightLogEntries);
+
     return {
       offPrayStats: `${fighter.offPraySuccessCount}/${fighter.attackCount} (${offPrayPercentage}%)`,
       deservedDamage: this.numberFormat.format(fighter.deservedDamage),
@@ -135,7 +138,32 @@ export class FightDataParser {
       offensivePrayStats: `${fighter.offensivePraySuccessCount}/${fighter.attackCount} (${offensivePrayPercentage}%)`,
       hpHealed: fighter.hpHealed,
       robeHitStats: `${fighter.robeHits}/${fighter.attackCount} (${robeHitPercentage}%)`,
-      ghostBarrageStats: `${fighter.ghostBarrageCount} G.B. (${this.numberFormat.format(fighter.ghostBarrageDeservedDamage)})`
+      ghostBarrageStats: `${fighter.ghostBarrageCount} G.B. (${this.numberFormat.format(fighter.ghostBarrageDeservedDamage)})`,
+      koChances: koChances
+    };
+  }
+
+  // Calculate KO chances based on fight log entries
+  calculateKoChances(fightLogEntries) {
+    if (!fightLogEntries || fightLogEntries.length === 0) {
+      return { count: 0, overallProbability: 0 };
+    }
+
+    let koChanceCount = 0;
+    let survivalProbability = 1.0;
+
+    for (const entry of fightLogEntries) {
+      if (entry.koChance !== null && entry.koChance > 0) {
+        koChanceCount++;
+        survivalProbability *= (1.0 - entry.koChance);
+      }
+    }
+
+    const overallKoProbability = koChanceCount > 0 ? (1.0 - survivalProbability) : 0;
+
+    return {
+      count: koChanceCount,
+      overallProbability: overallKoProbability
     };
   }
 
@@ -166,7 +194,8 @@ export class FightDataParser {
       offensivePrayStats: isCompetitor ? metrics.offensivePrayStats : 'N/A',
       hpHealed: isCompetitor ? metrics.hpHealed : 'N/A',
       robeHitStats: robeHitStats,
-      ghostBarrageStats: isCompetitor ? metrics.ghostBarrageStats : 'N/A'
+      ghostBarrageStats: isCompetitor ? metrics.ghostBarrageStats : 'N/A',
+      koChances: metrics.koChances
     };
   }
 }

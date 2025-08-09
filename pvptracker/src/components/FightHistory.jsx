@@ -7,7 +7,7 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
         <div className="history-header">
           <h3>Fight History</h3>
         </div>
-        <div className="empty-history">
+        <div className="no-history">
           <p>No fight data saved.</p>
         </div>
       </div>
@@ -17,14 +17,14 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
   return (
     <div className="fight-history">
       <div className="history-header">
-        <h3>Fight History ({fights.length})</h3>
-        <button
+        <h3>History ({fights.length})</h3>
+        <div
           onClick={onClearHistory}
-          className="btn btn-danger btn-small"
-          title="Clear all fight history"
+          className="clear-history-btn"
+          title="Delete fight history"
         >
-          Clear All
-        </button>
+          🗑️
+        </div>
       </div>
 
       <div className="history-list">

@@ -1,7 +1,8 @@
 .fight-history {
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.2rem;
+  padding-top: .75rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   height: fit-content;
   max-height: 80vh;
@@ -12,8 +13,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: .9rem;
+  padding-bottom: .3rem;
   border-bottom: 2px solid #f1f3f4;
 }
 
@@ -24,13 +25,27 @@
   font-weight: 600;
 }
 
-.empty-history {
+.clear-history-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.clear-history-btn:hover {
+  transition: all 0.2s ease;
+  transform: scale(1.08);
+  background-color: #f1f3f4;
+  border-radius: 4px;
+}
+
+.no-history {
   text-align: center;
   padding: 2rem;
   color: #6c757d;
 }
 
-.empty-history p {
+.no-history p {
   margin: 0;
   font-size: 0.9rem;
 }
@@ -94,7 +109,6 @@
   transition: opacity 0.2s ease;
   padding: 0.25rem;
   border-radius: 4px;
-  color: #dc3545;
 }
 
 .history-item:hover .delete-btn {
