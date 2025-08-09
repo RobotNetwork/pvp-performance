@@ -1,18 +1,16 @@
 .fight-data-input {
   background: white;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .input-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  text-align: center;
 }
 
 .input-header h2 {
@@ -22,13 +20,45 @@
   font-weight: 600;
 }
 
-.input-actions {
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+  text-align: center;
+}
+
+.pasted-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #c3e6cb;
+  text-align: center;
   display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+.pasted-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
 }
 
 .textarea-container {
+  position: relative;
   margin-bottom: 1.5rem;
 }
 
@@ -37,89 +67,120 @@
   padding: 1rem;
   border: 2px solid #e1e5e9;
   border-radius: 8px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 0.9rem;
-  line-height: 1.5;
   resize: vertical;
-  transition: all 0.3s ease;
-}
-
-.fight-data-textarea.collapsed {
   min-height: 60px;
-  max-height: 80px;
-  overflow: hidden;
-}
-
-.fight-data-textarea.expanded {
-  min-height: 200px;
+  transition: all 0.2s ease;
+  background: #f8f9fa;
+  color: transparent;
+  text-shadow: 0 0 0 #6c757d;
 }
 
 .fight-data-textarea:focus {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+  color: #333;
+  text-shadow: none;
 }
 
-.fight-data-textarea:disabled {
-  background-color: #f8f9fa;
+.fight-data-textarea.pasted {
+  border-color: #28a745;
+  background: #f8fff9;
+}
+
+.textarea-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(248, 249, 250, 0.9);
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.fight-data-textarea:focus + .textarea-overlay,
+.fight-data-textarea.pasted + .textarea-overlay {
+  opacity: 0;
+}
+
+.paste-instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   color: #6c757d;
-  cursor: not-allowed;
+  font-size: 0.9rem;
+}
+
+.paste-icon {
+  font-size: 2rem;
+  opacity: 0.7;
 }
 
 .form-actions {
   display: flex;
+  justify-content: center;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  border: 1px solid #f5c6cb;
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.data-preview {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  text-align: center;
-  color: #6c757d;
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #667eea;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #5a6fd8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .fight-data-input {
-    padding: 1.5rem;
-  }
-  
-  .input-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .input-actions {
-    justify-content: center;
-  }
-  
-  .form-actions {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .fight-data-input {
     padding: 1rem;
   }
   
   .input-header h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
   
-  .fight-data-textarea {
-    font-size: 0.8rem;
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
   }
 }

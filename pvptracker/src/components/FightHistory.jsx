@@ -1,6 +1,6 @@
 import './FightHistory.css'
 
-const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, onDeleteFight, getWinner }) => {
+const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, onDeleteFight, getWinner, duplicateFightId }) => {
   if (fights.length === 0) {
     return (
       <div className="fight-history">
@@ -31,11 +31,12 @@ const FightHistory = ({ fights, selectedFight, onFightSelect, onClearHistory, on
         {fights.map((fight) => {
           const winner = getWinner(fight.data)
           const isSelected = selectedFight && selectedFight.id === fight.id
+          const isDuplicate = duplicateFightId === fight.id
 
           return (
             <div
               key={fight.id}
-              className={`history-item ${isSelected ? 'selected' : ''}`}
+              className={`history-item ${isSelected ? 'selected' : ''} ${isDuplicate ? 'duplicate' : ''}`}
               onClick={() => onFightSelect(fight)}
             >
               <button

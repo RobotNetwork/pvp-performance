@@ -46,7 +46,7 @@
   border: 1px solid #e1e5e9;
   border-radius: 8px;
   padding: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.1rem;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -61,6 +61,25 @@
   border-color: #667eea;
   background-color: #e8f2ff;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.history-item.duplicate {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  }
 }
 
 .delete-btn {
@@ -116,10 +135,6 @@
   margin-bottom: 0.5rem;
   font-size: 0.8rem;
   color: #6c757d;
-}
-
-.fight-time {
-  font-weight: 500;
 }
 
 .winner-indicator {
@@ -213,6 +228,6 @@
   }
   
   .history-item {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 }

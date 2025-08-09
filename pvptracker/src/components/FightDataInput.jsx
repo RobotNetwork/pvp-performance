@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './FightDataInput.css'
 
 const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
@@ -7,6 +7,8 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
     return saved || ''
   })
   const [isExpanded, setIsExpanded] = useState(false)
+  const [showPasted, setShowPasted] = useState(false)
+  const hasAutoAnalyzed = useRef(false)
 
   // Save input value to localStorage whenever it changes
   useEffect(() => {
@@ -17,23 +19,65 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
     }
   }, [inputValue])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (inputValue.trim()) {
-      onSubmit(inputValue.trim())
+  // Auto-analyze when input changes (only once per paste)
+  useEffect(() => {
+    if (inputValue.trim() && !isLoading && !hasAutoAnalyzed.current) {
+      // Show "Pasted!" message
+      setShowPasted(true)
+      
+      // Mark as analyzed to prevent recursion
+      hasAutoAnalyzed.current = true
+      
+      // Auto-analyze after a brief delay
+      const timer = setTimeout(() => {
+        onSubmit(inputValue.trim())
+        setShowPasted(false)
+        // Clear input field after successful submission
+        setInputValue('')
+        hasAutoAnalyzed.current = false
+      }, 500)
+      
+      return () => clearTimeout(timer)
     }
+  }, [inputValue, onSubmit, isLoading])
+
+  // Reset the flag when input is cleared
+  useEffect(() => {
+    if (!inputValue.trim()) {
+      hasAutoAnalyzed.current = false
+    }
+  }, [inputValue])
+
+  // Auto-hide "Pasted!" message after 2.5 seconds
+  useEffect(() => {
+    if (showPasted) {
+      const timer = setTimeout(() => {
+        setShowPasted(false)
+      }, 2500)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [showPasted])
+
+  const handlePaste = (e) => {
+    // Clear any previous error when new data is pasted
+    if (onClear) {
+      onClear()
+    }
+    // Reset the auto-analyze flag for new pastes
+    hasAutoAnalyzed.current = false
   }
 
-  const handleClear = () => {
-    setInputValue('')
-    localStorage.removeItem('pvpFightDataInput')
-    onClear()
+  const handleManualSubmit = () => {
+    if (inputValue.trim() && !isLoading) {
+      onSubmit(inputValue.trim())
+    }
   }
 
   return (
     <div className="fight-data-input">
       <div className="input-header">
-        <h2>Fight Data Input</h2>
+        <h2>Paste Fight Data</h2>
       </div>
 
       {error && (
@@ -42,38 +86,32 @@ const FightDataInput = ({ onSubmit, onClear, isLoading, error }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="textarea-container">
-          <textarea
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value)
-            }}
-            placeholder="Paste your fight data JSON here..."
-            className={`fight-data-textarea`}
-            disabled={isLoading}
-            rows={isExpanded ? 8 : 2}
-          />
+      {showPasted && (
+        <div className="pasted-message">
+          <span className="pasted-icon">✓</span>
+          <span>Pasted!</span>
         </div>
+      )}
 
-        <div className="form-actions">
-          <button 
-            type="submit" 
-            className="btn btn-primary"
-            disabled={!inputValue.trim() || isLoading}
-          >
-            {isLoading ? 'Processing...' : 'Analyze Fight Data'}
-          </button>
-          <button 
-            type="button" 
-            onClick={handleClear}
-            className="btn btn-danger"
-            disabled={isLoading}
-          >
-            Clear
-          </button>
+      <div className="textarea-container">
+        <textarea
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value)
+          }}
+          onPaste={handlePaste}
+          placeholder=""
+          className={`fight-data-textarea ${showPasted ? 'pasted' : ''}`}
+          disabled={isLoading}
+          rows={isExpanded ? 8 : 2}
+        />
+        <div className="textarea-overlay">
+          <div className="paste-instructions">
+            <span className="paste-icon">📋</span>
+            <span>Paste fight data here</span>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   )
 }

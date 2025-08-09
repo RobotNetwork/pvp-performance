@@ -17,6 +17,7 @@ body {
 
 .app {
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
 }
@@ -43,7 +44,7 @@ body {
 
 .app-main {
   flex: 1;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
@@ -56,14 +57,18 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .input-section {
   flex-shrink: 0;
+  width: 100%;
 }
 
 .display-section {
   flex: 1;
+  width: 100%;
 }
 
 .history-section {
@@ -131,10 +136,17 @@ body {
 @media (max-width: 1200px) {
   .app-main {
     flex-direction: column;
+    max-width: 900px;
+  }
+  
+  .app-content {
+    max-width: 100%;
   }
   
   .history-section {
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
   }
 }
 
@@ -150,6 +162,11 @@ body {
   .app-main {
     padding: 1rem;
     gap: 1rem;
+    max-width: 100%;
+  }
+  
+  .app-content {
+    gap: 1.5rem;
   }
 }
 
@@ -164,5 +181,9 @@ body {
   
   .app-main {
     padding: 0.75rem;
+  }
+  
+  .app-content {
+    gap: 1rem;
   }
 }
